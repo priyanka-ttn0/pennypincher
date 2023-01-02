@@ -60,7 +60,7 @@ class RelationalDatabaseService:
         pricing = Pricing(pricing_client, reg)
         return client, cloudwatch, pricing
    
-    def _get_parameters(self, rds_instance, reg, cloudwatch, pricing, rds_list, rds_inv_list,oderable_data):
+    def _get_parameters(self, rds_instance, reg, cloudwatch, pricing, rds_list, rds_inv_list,orderable_data):
         """Returns a list containing idle RDS information."""    
         rds = []
         is_idle = 'No'
@@ -73,7 +73,7 @@ class RelationalDatabaseService:
                                                         rds_instance['MultiAZ'], rds_instance['LicenseModel'],
                                                         rds_instance['StorageType'],
                                                         rds_instance['AllocatedStorage'],
-                                                        iops,oderable_data)
+                                                        iops,orderable_data)
 
         avg_cpu, avg_cpu = cloudwatch.get_avg_max_metric('AWS/RDS', 'CPUUtilization',
                                                             'DBInstanceIdentifier',
@@ -132,8 +132,8 @@ class RelationalDatabaseService:
                 client, cloudwatch, pricing = self._get_clients(reg)
                 for rds_instance in self._describe_rds(client):
                         try:
-                            oderable_data=self.get_orderable_options(client, rds_instance)
-                            rds_list,rds_inv_list = self._get_parameters(rds_instance, reg, cloudwatch, pricing, rds_list, rds_inv_list,oderable_data)
+                            orderable_data=self.get_orderable_options(client, rds_instance)
+                            rds_list,rds_inv_list = self._get_parameters(rds_instance, reg, cloudwatch, pricing, rds_list, rds_inv_list, orderable_data)
                         except:
                             print("PriceList may be empty")
             #To fetch top 10 resources with maximum saving.
