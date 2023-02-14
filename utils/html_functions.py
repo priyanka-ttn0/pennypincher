@@ -1,7 +1,6 @@
 import logging
 import sys
 
-
 class HTML:
     """Generates html page to send as email."""
     def __init__(self, resource_name=None, headers=None, ebs_list=None, savings=None):
@@ -17,13 +16,67 @@ class HTML:
         html_prefix = """ <html>
                     <head>
                         <style>
-                        table, th, td {
-                          border: 1px solid black;
-                          border-collapse: collapse;
-                          padding: 5px 15px;
-                          text-align: center; 
-                          vertical-align: middle;
-                        }
+                      html,
+        body {
+          height: 100%;
+          text-align: left;
+        }
+
+        body {
+          margin: 10;
+          background: linear-gradient(to right, #F5F7FA,#B8C6DB);
+          font-family: sans-serif;
+          font-weight: 100;
+        }
+
+
+        table {
+          width: 80%;
+          height: 40%;
+          border-collapse: collapse;
+          overflow: hidden;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        th,
+        td {
+          padding: 15px;
+          background-color: rgba(255,255,255,0.2);
+          color: #000;
+        }
+
+        th {
+          text-align: left;
+        }
+
+        th {
+          background-color: #bec5e2;
+        }
+
+        tr:hover {
+          background-color: rgba(255,255,255,0.3);
+        }
+        
+        td {
+          position: relative;
+        }
+
+        td:hover:before {
+          content: "";
+          left: 0;
+          right: 0;
+          background-color: rgba(255,255,255,0.2);
+        }
+
+        /* h2,h3,h4{
+          text-align: center;
+        } */
+
+        /* img{
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        } */
                         </style>
                     </head>
                     <body>"""
@@ -31,7 +84,7 @@ class HTML:
 
     def get_HTML_infix(self):   
         """To display resource name in page."""
-        html_infix = "<br><br><h4> Resource - "
+        html_infix = "<h4> Resource - "
         return html_infix
 
     def get_HTML_suffix(self):
@@ -39,7 +92,7 @@ class HTML:
         return html_suffix
 
     def header_to_html(self, header):
-        html = "<table><tr>"
+        html = "<!-- <div class='container'> --><table><tr>"
         for i in header:
             if i == "Criteria":
                 continue
@@ -59,7 +112,7 @@ class HTML:
                 else:
                     html = html + "<td>%s</td>" % (i)
             html = html + "</tr>"
-        html = html + "</table>"
+        html = html + "</table><!-- </div> -->"
         html = html + "<br><b> Total Savings = $%s </b>" % (round(savings, 2))
         return html
 
@@ -71,7 +124,7 @@ class HTML:
             ebs_table = self.body_to_html(ebs_list, savings)  # Table Values
             msg_list.append([ebs_table, resource_name])  # Append value to final result list
             html_infix = self.get_HTML_infix()
-            criteria = "<br><h4>"+headers[9]+" : "+ebs_list[0][9]+"</h4>"
+            criteria = "<h4>"+headers[9]+" : "+ebs_list[0][9]+"</h4>"
             for resource in msg_list:
                 html = html_infix + resource[1] + " : </h4>" + criteria + html + resource[0]
             return html
