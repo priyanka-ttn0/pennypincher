@@ -33,26 +33,8 @@ class Slackalert:
         inventory_info[resource_name]['Resources'] = resource_list
         return inventory_info
 
-    def slack_alert(self, resource_info, account_name, total_savings,bucket_name,current_datetime,reporting_platform):
+    def slack_alert(self, resource_info, total_savings, bucket_name, date_obj_format, reporting_platform, response):
         try:   
-            date_obj = date.today()
-            date_obj_format = date_obj.strftime("%d %b %Y")
-            s3_signature ={
-                    'v4':'s3v4',
-                    'v2':'s3'
-                    }
-            session = boto3.Session()
-            
-            s3Client = session.client("s3",
-                                    config=Config(signature_version=s3_signature['v4'])
-                                    )
-            
-            print("bucket: "+bucket_name)
-            response = s3Client.generate_presigned_url('get_object',
-                                                    Params={'Bucket': bucket_name,
-                                                            'Key': current_datetime+"/pennypincher_findings.html"},
-                                                    ExpiresIn=604800)
-            #print(response)
             print("total saving is"+total_savings)
             #list to store fields
             field = []
@@ -130,9 +112,6 @@ class Slackalert:
                 "Error on line {} in slack_send.py".format(sys.exc_info()[-1].tb_lineno) + " | Message: " +
                 str(e))
             sys.exit(1)
-            
-            
-#"2022-11-21T07-44/pennypincher_findings.html"
 
 
         

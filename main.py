@@ -118,7 +118,7 @@ def lambda_handler(event=None, context=None):
                 tl_saving = str(round(total_savings, 2)), resource_info = resource_info, platform= reporting_platform, current_date = date_obj_format, url=pre_url, bucket_name = report_bucket)
         if 'slack' in  reporting_platform.lower().split(','):
             print("Sending report to slack .....")
-            slack_obj.slack_alert(resource_info, account_name, str(round(total_savings, 2)),report_bucket,current_datetime,reporting_platform)      
+            slack_obj.slack_alert(resource_info, str(round(total_savings, 2)),report_bucket, date_obj_format, reporting_platform, pre_url)      
         return "Success"
     except Exception as e:
         logger.error("Error on line {} in main.py".format(sys.exc_info()[-1].tb_lineno) +

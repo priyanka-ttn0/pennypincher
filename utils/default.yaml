@@ -44,11 +44,11 @@ resources:
 config:
   env:
     channel_name: '-'             #Slack Channel Name
-    webhook_url: '-'                   #Slack Channel webhook url
+    webhook_url: 'https://hooks.slack.com/services/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'                   #Slack Channel webhook url
     from_address: ''                #SES verified email address from which email is to be sent
     to_address: ''         #Email addresses of recipents (Comma Separated)
     ses_region: 'us-east-1'                    #Region where SES is configured
-    reporting_platform: ''    #Email/Slack/Email and Slack
+    reporting_platform: 'slack'    #Email/Slack/Email and Slack
     account_name: 'AWS Account'
     report_bucket: ''
     
